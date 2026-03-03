@@ -20,7 +20,7 @@ export interface FrontendClient {
 
 export const chatService = {
   async getChatData(): Promise<{ clients: FrontendClient[], messages: FrontendMessage[] }> {
-    const token = 'eyJhbGciOiJFUzI1NiIsImtpZCI6IjA5NGZhNTA2LTYzNGYtNDc5OS1hOGFjLThkNzJkZmU1NTcxZSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2ppcWFsY21neWhsZHJhemFjZ2d6LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI2MDQ3ZmI3MS0zNTVlLTRiZGEtYmI0MC1mZDI3MDZjZDRkNzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzcyNTYyMjk5LCJpYXQiOjE3NzI1NTg2OTksImVtYWlsIjoiYWxlam9iYXNpbGUwM0BnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3MjU1ODY5OX1dLCJzZXNzaW9uX2lkIjoiYzA3YTcwNjAtOGZhNi00MmY3LTg2NDgtZDRkYWFhNWNmNGRlIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.Ot2miFvWiOvqTzMf2WMmqx92HStj9KHW_0bRKEQSn3AgmlfCnDldicsjcfNMeF1ZRuoMqwNF8Uite18vOUnpLQ';
+    const token = 'eyJhbGciOiJFUzI1NiIsImtpZCI6IjA5NGZhNTA2LTYzNGYtNDc5OS1hOGFjLThkNzJkZmU1NTcxZSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2ppcWFsY21neWhsZHJhemFjZ2d6LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI2MDQ3ZmI3MS0zNTVlLTRiZGEtYmI0MC1mZDI3MDZjZDRkNzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzcyNTgzODIxLCJpYXQiOjE3NzI1ODAyMjEsImVtYWlsIjoiYWxlam9iYXNpbGUwM0BnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3MjU4MDIyMX1dLCJzZXNzaW9uX2lkIjoiYmFkNjY2NTAtNzQzZC00NzMxLWFmMWQtMjU2ZTU5YWMyMTNjIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.wn1WQNrlerT3ejBvW5tJewjXf_xM2pUiZdFzfTBUa5dKT9-p5IRs1wBQU-wrkGQ5I7mJRBnvA9ZsN0mzSCUgZw';
 
     const response = await fetch(`${API_URL}/agents/perfil/clientes`, {
       method: 'GET',
@@ -68,7 +68,7 @@ export const chatService = {
   },
 
   async sendMessage(clientId: string, text: string): Promise<FrontendMessage> {
-    const token = 'eyJhbGciOiJFUzI1NiIsImtpZCI6IjA5NGZhNTA2LTYzNGYtNDc5OS1hOGFjLThkNzJkZmU1NTcxZSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2ppcWFsY21neWhsZHJhemFjZ2d6LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI2MDQ3ZmI3MS0zNTVlLTRiZGEtYmI0MC1mZDI3MDZjZDRkNzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzcyNTYyMjk5LCJpYXQiOjE3NzI1NTg2OTksImVtYWlsIjoiYWxlam9iYXNpbGUwM0BnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3MjU1ODY5OX1dLCJzZXNzaW9uX2lkIjoiYzA3YTcwNjAtOGZhNi00MmY3LTg2NDgtZDRkYWFhNWNmNGRlIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.Ot2miFvWiOvqTzMf2WMmqx92HStj9KHW_0bRKEQSn3AgmlfCnDldicsjcfNMeF1ZRuoMqwNF8Uite18vOUnpLQ';
+    const token = 'eyJhbGciOiJFUzI1NiIsImtpZCI6IjA5NGZhNTA2LTYzNGYtNDc5OS1hOGFjLThkNzJkZmU1NTcxZSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2ppcWFsY21neWhsZHJhemFjZ2d6LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI2MDQ3ZmI3MS0zNTVlLTRiZGEtYmI0MC1mZDI3MDZjZDRkNzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzcyNTgzODIxLCJpYXQiOjE3NzI1ODAyMjEsImVtYWlsIjoiYWxlam9iYXNpbGUwM0BnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3MjU4MDIyMX1dLCJzZXNzaW9uX2lkIjoiYmFkNjY2NTAtNzQzZC00NzMxLWFmMWQtMjU2ZTU5YWMyMTNjIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.wn1WQNrlerT3ejBvW5tJewjXf_xM2pUiZdFzfTBUa5dKT9-p5IRs1wBQU-wrkGQ5I7mJRBnvA9ZsN0mzSCUgZw';
 
     const response = await fetch(`${API_URL}/agents/mensajes`, {
       method: 'POST',
@@ -96,6 +96,28 @@ export const chatService = {
       origin: data.origin,
       time: new Date(data.createdAt).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
     };
+  },
+
+  async handleReactivateBot (clientId: number | string) {
+    const token = "eyJhbGciOiJFUzI1NiIsImtpZCI6IjA5NGZhNTA2LTYzNGYtNDc5OS1hOGFjLThkNzJkZmU1NTcxZSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2ppcWFsY21neWhsZHJhemFjZ2d6LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI2MDQ3ZmI3MS0zNTVlLTRiZGEtYmI0MC1mZDI3MDZjZDRkNzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzcyNTgzODIxLCJpYXQiOjE3NzI1ODAyMjEsImVtYWlsIjoiYWxlam9iYXNpbGUwM0BnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3MjU4MDIyMX1dLCJzZXNzaW9uX2lkIjoiYmFkNjY2NTAtNzQzZC00NzMxLWFmMWQtMjU2ZTU5YWMyMTNjIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.wn1WQNrlerT3ejBvW5tJewjXf_xM2pUiZdFzfTBUa5dKT9-p5IRs1wBQU-wrkGQ5I7mJRBnvA9ZsN0mzSCUgZw"
+
+    const response = await fetch('http://localhost:3000/agents/clients/activar-bot', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` 
+      },
+
+      body: JSON.stringify({ clientId: Number(clientId) }) 
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || 'Error de red al reactivar el bot');
+    }
+
+    return await response.json();
   }
+
 };
 

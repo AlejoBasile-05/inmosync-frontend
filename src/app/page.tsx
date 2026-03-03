@@ -61,7 +61,7 @@ export default function CRMPage() {
     [allMessages, selectedClientId]
   )
 
-const handleSend = useCallback(
+  const handleSend = useCallback(
     async (text: string) => {
       if (!selectedClientId) return;
 
@@ -78,6 +78,21 @@ const handleSend = useCallback(
     [selectedClientId] 
   )
 
+  const handleReactivateBot = async () => {
+    if (!selectedClientId) return; 
+
+    try {
+
+      await chatService.handleReactivateBot(selectedClientId);
+
+      alert('🤖 Bot reactivado exitosamente. La IA responderá el próximo mensaje de este cliente.');
+
+    } catch (error) {
+      console.error('Error reactivando el bot:', error);
+      alert('Hubo un error al intentar reactivar el bot. Revisa la conexión.');
+    }
+  };
+
   if (isLoading) {
     return <div className="flex h-screen items-center justify-center bg-background">Cargando chats...</div>
   }
@@ -93,7 +108,7 @@ const handleSend = useCallback(
       <main className="flex flex-1 flex-col overflow-hidden">
         {selectedClient ? (
           <>
-            <ChatHeader client={selectedClient} />
+            <ChatHeader client={selectedClient} handle={handleReactivateBot} />
             <ChatMessages messages={clientMessages} />
             <ChatInput onSend={handleSend} />
           </>

@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback } from "@/src/components/ui/avatar"
 import { Button } from "@/src/components/ui/button"
 import { cn } from "../lib/utils"
 import type { Client, LeadScore } from "../lib/mock-data"
+import { chatService } from "../services/chat.service"
 
 function getInitials(name: string) {
   return name
@@ -40,9 +41,10 @@ function getAvatarColor(id: string) {
 
 interface ChatHeaderProps {
   client: Client
+  handle: () => void
 }
 
-export function ChatHeader({ client }: ChatHeaderProps) {
+export function ChatHeader({ client, handle }: ChatHeaderProps) {
   const score = getScoreBadge(client.score)
 
   return (
@@ -69,10 +71,15 @@ export function ChatHeader({ client }: ChatHeaderProps) {
           <span className="text-xs text-muted-foreground">{client.number}</span>
         </div>
       </div>
-      <Button variant="outline" size="sm" className="gap-1.5 text-xs">
-        <Home className="size-3.5" />
-        Ver Propiedades
-      </Button>
+      <div className="flex items-center gap-3">
+        <Button onClick={handle} variant="outline" size="sm" className="ml-2 flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+          Reactivar IA
+        </Button>
+        <Button variant="outline" size="sm" className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+          <Home className="size-3.5" />
+          Ver Propiedades
+        </Button>
+      </div>
     </header>
   )
 }
