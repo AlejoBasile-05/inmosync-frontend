@@ -5,7 +5,7 @@ import { Search } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/src/components/ui/avatar"
 import { ScrollArea } from "@/src/components/ui/scroll-area"
 import { cn } from "../lib/utils"
-import type { Client, LeadScore } from "../lib/mock-data"
+import type { FrontendClient } from "../services/chat.service"
 
 function getInitials(name: string) {
   return name
@@ -16,7 +16,7 @@ function getInitials(name: string) {
     .toUpperCase()
 }
 
-function getScoreBadge(score: LeadScore) {
+function getScoreBadge(score: "hot" | "warm" | "cold") {
   switch (score) {
     case "hot":
       return { label: "Hot", icon: "\u{1F525}", className: "bg-red-50 text-red-700 border-red-200" }
@@ -40,7 +40,7 @@ function getAvatarColor(id: string) {
 }
 
 interface ClientSidebarProps {
-  clients: Client[]
+  clients: FrontendClient[]
   selectedClientId: string
   onSelectClient: (id: string) => void
 }

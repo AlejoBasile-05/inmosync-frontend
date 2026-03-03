@@ -1,20 +1,59 @@
 "use client"
 
-import { useState, useMemo, useCallback } from "react"
-import { clients as mockClients, messages as mockMessages, type Message } from "../lib/mock-data"
+import { useState, useMemo, useCallback, useEffect } from "react"
+import { chatService, type FrontendClient, type FrontendMessage } from "../services/chat.service"
 import { ClientSidebar } from "../components/client-sidebar"
 import { ChatHeader } from "../components/chat-header"
 import { ChatMessages } from "../components/chat-messages"
 import { ChatInput } from "../components/chat-input"
 import { EmptyChat } from "../components/empty-chat"
+import { io, Socket } from "socket.io-client";
 
 export default function CRMPage() {
-  const [selectedClientId, setSelectedClientId] = useState<string>("1")
-  const [allMessages, setAllMessages] = useState<Message[]>(mockMessages)
+  const [clients, setClients] = useState<FrontendClient[]>([])
+  const [allMessages, setAllMessages] = useState<FrontendMessage[]>([])
+  const [selectedClientId, setSelectedClientId] = useState<string>("")
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await chatService.getChatData()
+        setClients(data.clients)
+        setAllMessages(data.messages)
+        if (data.clients.length > 0) {
+          setSelectedClientId(data.clients[0].id)
+        }
+      } catch (error) {
+        console.error("Error cargando el chat:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    loadData()
+  }, [])
+
+  useEffect(() => {
+
+    if (!selectedClientId) return; 
+
+    const socket: Socket = io("http://localhost:3000");
+
+    const eventName = `newMessage-${selectedClientId}`;
+
+    socket.on(eventName, (incomingMessage: FrontendMessage) => {
+      setAllMessages((prevMessages) => [...prevMessages, incomingMessage]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+
+  }, [selectedClientId]);
 
   const selectedClient = useMemo(
-    () => mockClients.find((c) => c.id === selectedClientId),
-    [selectedClientId]
+    () => clients.find((c) => c.id === selectedClientId),
+    [clients, selectedClientId]
   )
 
   const clientMessages = useMemo(
@@ -22,32 +61,35 @@ export default function CRMPage() {
     [allMessages, selectedClientId]
   )
 
-  const handleSend = useCallback(
-    (text: string) => {
-      const now = new Date()
-      const time = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`
-      const newMsg: Message = {
-        id: `msg-${Date.now()}`,
-        clientId: selectedClientId,
-        text,
-        origin: "agent",
-        time,
+const handleSend = useCallback(
+    async (text: string) => {
+      if (!selectedClientId) return;
+
+      try {
+        const newMsg = await chatService.sendMessage(selectedClientId, text);
+
+        setAllMessages((prev) => [...prev, newMsg]);
+        
+      } catch (error) {
+        console.error("Error al enviar:", error);
+        alert("Hubo un error al enviar el mensaje de WhatsApp. Revisa la consola.");
       }
-      setAllMessages((prev) => [...prev, newMsg])
     },
-    [selectedClientId]
+    [selectedClientId] 
   )
 
+  if (isLoading) {
+    return <div className="flex h-screen items-center justify-center bg-background">Cargando chats...</div>
+  }
+
   return (
-    <div className="flex h-dvh overflow-hidden bg-background">
-      {/* Left sidebar */}
+    <div className="flex h-screen overflow-hidden bg-background">
       <ClientSidebar
-        clients={mockClients}
+        clients={clients}
         selectedClientId={selectedClientId}
         onSelectClient={setSelectedClientId}
       />
 
-      {/* Main chat area */}
       <main className="flex flex-1 flex-col overflow-hidden">
         {selectedClient ? (
           <>
