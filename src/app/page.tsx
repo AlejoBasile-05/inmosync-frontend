@@ -14,6 +14,7 @@ export default function CRMPage() {
   const [allMessages, setAllMessages] = useState<FrontendMessage[]>([])
   const [selectedClientId, setSelectedClientId] = useState<string>("")
   const [isLoading, setIsLoading] = useState(true)
+  const [loadedChats, setLoadedChats] = useState<string[]>([])
 
   useEffect(() => {
     const loadData = async () => {
@@ -57,7 +58,7 @@ export default function CRMPage() {
   )
 
   const clientMessages = useMemo(
-    () => allMessages.filter((m) => m.clientId === selectedClientId),
+    () => allMessages.filter((m) => m.clientId.toString() === selectedClientId.toString()),
     [allMessages, selectedClientId]
   )
 
@@ -92,6 +93,32 @@ export default function CRMPage() {
       alert('Hubo un error al intentar reactivar el bot. Revisa la conexión.');
     }
   };
+
+  useEffect(() => {
+    if (!selectedClientId) return;
+
+    if (loadedChats.includes(selectedClientId.toString())) return;
+
+    const fetchHistory = async () => {
+      try {
+        const history = await chatService.getClientHistory(selectedClientId);
+
+        setAllMessages((prevMessages) => {
+          const otherClientsMessages = prevMessages.filter(
+            (m) => m.clientId?.toString() !== selectedClientId?.toString()
+          );
+          return [...otherClientsMessages, ...history];
+        });
+
+        setLoadedChats((prev) => [...prev, selectedClientId.toString()]);
+
+      } catch (error) {
+        console.error("Error al cargar el historial:", error);
+      }
+    };
+
+    fetchHistory();
+  }, [selectedClientId, loadedChats]);
 
   if (isLoading) {
     return <div className="flex h-screen items-center justify-center bg-background">Cargando chats...</div>
