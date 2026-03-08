@@ -13,8 +13,8 @@ export interface Property {
   beds: number
   baths: number
   sqft: number
-  status: "available" | "reserved"
-  imageUrl: string
+  status: "FREE" | "BUSY"
+  mainImageUrl: string
 }
 
 interface PropertyCardProps {
@@ -23,23 +23,26 @@ interface PropertyCardProps {
 
 export function PropertyCard({ property }: PropertyCardProps) {
   const statusConfig = {
-    available: {
-      label: "Available",
+    FREE: {
+      label: "Disponible",
       className: "bg-emerald-500/90 text-white border-emerald-500/90",
     },
-    reserved: {
-      label: "Reserved",
+    BUSY: {
+      label: "Reservado",
       className: "bg-slate-500/90 text-white border-slate-500/90",
     },
   }
 
-  const status = statusConfig[property.status]
+  const status = statusConfig[property.status as keyof typeof statusConfig] || {
+    label: String(property.status || "UNDEFINED"),
+    className: "bg-red-500 border-red-500 text-white",
+  }
 
   return (
     <Card className="overflow-hidden p-0 group">
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image
-          src={property.imageUrl}
+          src={property.mainImageUrl}
           alt={property.title}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
