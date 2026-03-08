@@ -1,8 +1,8 @@
 "use client"
 
 import { useRef, useEffect } from "react"
-import { cn } from "../lib/utils"
-import type { Message } from "../lib/mock-data"
+import { cn } from "../../lib/utils"
+import type { Message } from "../../lib/mock-data"
 
 interface ChatMessagesProps {
   messages: Message[]

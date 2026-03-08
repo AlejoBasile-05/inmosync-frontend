@@ -2,11 +2,11 @@
 
 import { useState, useMemo, useCallback, useEffect } from "react"
 import { chatService, type FrontendClient, type FrontendMessage } from "../services/chat.service"
-import { ClientSidebar } from "../components/client-sidebar"
-import { ChatHeader } from "../components/chat-header"
-import { ChatMessages } from "../components/chat-messages"
-import { ChatInput } from "../components/chat-input"
-import { EmptyChat } from "../components/empty-chat"
+import { ClientSidebar } from "../components/chats/client-sidebar"
+import { ChatHeader } from "../components/chats/chat-header"
+import { ChatMessages } from "../components/chats/chat-messages"
+import { ChatInput } from "../components/chats/chat-input"
+import { EmptyChat } from "../components/chats/empty-chat"
 import { io, Socket } from "socket.io-client";
 
 export default function CRMPage() {

@@ -3,9 +3,17 @@
 import { Home } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/src/components/ui/avatar"
 import { Button } from "@/src/components/ui/button"
-import { cn } from "../lib/utils"
-import type { Client, LeadScore } from "../lib/mock-data"
-import { chatService } from "../services/chat.service"
+import { PropertyCatalog } from "@/src/components/properties/property-catalog"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/src/components/ui/sheet"
+import { cn } from "../../lib/utils"
+import type { Client, LeadScore } from "../../lib/mock-data"
 
 function getInitials(name: string) {
   return name
@@ -71,14 +79,32 @@ export function ChatHeader({ client, handle }: ChatHeaderProps) {
           <span className="text-xs text-muted-foreground">{client.number}</span>
         </div>
       </div>
+      
       <div className="flex items-center gap-3">
-        <Button onClick={handle} variant="outline" size="sm" className="ml-2 flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
-          Reactivar IA
+        <Button onClick={handle} variant="outline" size="sm" className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+          🤖 Reactivar IA
         </Button>
-        <Button variant="outline" size="sm" className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
-          <Home className="size-3.5" />
-          Ver Propiedades
-        </Button>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="sm" className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+              <Home className="size-3.5" />
+              Ver Propiedades
+            </Button>
+          </SheetTrigger>
+
+          <SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto p-0 flex flex-col">
+            <SheetHeader className="border-b border-border px-4 py-4">
+              <SheetTitle>Propiedades Disponibles</SheetTitle>
+              <SheetDescription>
+                Catálogo de inmuebles para ofrecer a {client.name}.
+              </SheetDescription>
+            </SheetHeader>
+
+            <div className="flex-1 overflow-hidden">
+              <PropertyCatalog clientId={client.id} />
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </header>
   )

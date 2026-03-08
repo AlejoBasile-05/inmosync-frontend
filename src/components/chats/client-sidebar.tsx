@@ -4,8 +4,8 @@ import { useState, useMemo } from "react"
 import { Search } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/src/components/ui/avatar"
 import { ScrollArea } from "@/src/components/ui/scroll-area"
-import { cn } from "../lib/utils"
-import type { FrontendClient } from "../services/chat.service"
+import { cn } from "../../lib/utils"
+import type { FrontendClient } from "../../services/chat.service"
 
 function getInitials(name: string) {
   return name
