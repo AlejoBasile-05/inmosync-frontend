@@ -1,4 +1,5 @@
 'use client'
+export const dynamic = 'force-dynamic'
 
 import { AddPropertyForm } from "@/src/components/properties/add-property-form"
 import { Landmark } from "lucide-react"
