@@ -1,4 +1,5 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+const isServer = typeof window === 'undefined'; // Para que no intente hacer fetch en el servidor durante la generación estática
 
 export interface FrontendMessage {
   id: string;
@@ -20,6 +21,9 @@ export interface FrontendClient {
 
 export const chatService = {
   async getChatData(): Promise<{ clients: FrontendClient[], messages: FrontendMessage[] }> {
+    if (isServer) return { clients: [], messages: [] }
+
+
     const token = 'eyJhbGciOiJFUzI1NiIsImtpZCI6IjA5NGZhNTA2LTYzNGYtNDc5OS1hOGFjLThkNzJkZmU1NTcxZSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2ppcWFsY21neWhsZHJhemFjZ2d6LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI2MDQ3ZmI3MS0zNTVlLTRiZGEtYmI0MC1mZDI3MDZjZDRkNzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzczMDA2OTAyLCJpYXQiOjE3NzMwMDMzMDIsImVtYWlsIjoiYWxlam9iYXNpbGUwM0BnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3MzAwMzMwMn1dLCJzZXNzaW9uX2lkIjoiZWJhYzM4NWYtYjZjMS00N2ZmLTgyNmItZWMyM2NiZWE1MjQxIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.PCVPlycH-kZnaE2ZKIFQx7SCv6nL6o7S-1w_TaLAWI49yIrytvM16Fx8Awn3__qwHE5F6NfEJq8uNiRcq7CSWw';
 
     const response = await fetch(`${API_URL}/agents/perfil/clientes`, {
@@ -68,6 +72,8 @@ export const chatService = {
   },
 
   async sendMessage(clientId: string, text: string): Promise<FrontendMessage> {
+    if (isServer) return [] as unknown as FrontendMessage
+
     const token = 'eyJhbGciOiJFUzI1NiIsImtpZCI6IjA5NGZhNTA2LTYzNGYtNDc5OS1hOGFjLThkNzJkZmU1NTcxZSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2ppcWFsY21neWhsZHJhemFjZ2d6LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI2MDQ3ZmI3MS0zNTVlLTRiZGEtYmI0MC1mZDI3MDZjZDRkNzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzczMDA2OTAyLCJpYXQiOjE3NzMwMDMzMDIsImVtYWlsIjoiYWxlam9iYXNpbGUwM0BnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3MzAwMzMwMn1dLCJzZXNzaW9uX2lkIjoiZWJhYzM4NWYtYjZjMS00N2ZmLTgyNmItZWMyM2NiZWE1MjQxIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.PCVPlycH-kZnaE2ZKIFQx7SCv6nL6o7S-1w_TaLAWI49yIrytvM16Fx8Awn3__qwHE5F6NfEJq8uNiRcq7CSWw';
 
     const response = await fetch(`${API_URL}/agents/mensajes`, {
@@ -99,6 +105,9 @@ export const chatService = {
   },
 
   async handleReactivateBot (clientId: number | string) {
+    if (isServer) return []
+
+
     const token = "eyJhbGciOiJFUzI1NiIsImtpZCI6IjA5NGZhNTA2LTYzNGYtNDc5OS1hOGFjLThkNzJkZmU1NTcxZSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2ppcWFsY21neWhsZHJhemFjZ2d6LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI2MDQ3ZmI3MS0zNTVlLTRiZGEtYmI0MC1mZDI3MDZjZDRkNzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzczMDA2OTAyLCJpYXQiOjE3NzMwMDMzMDIsImVtYWlsIjoiYWxlam9iYXNpbGUwM0BnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3MzAwMzMwMn1dLCJzZXNzaW9uX2lkIjoiZWJhYzM4NWYtYjZjMS00N2ZmLTgyNmItZWMyM2NiZWE1MjQxIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.PCVPlycH-kZnaE2ZKIFQx7SCv6nL6o7S-1w_TaLAWI49yIrytvM16Fx8Awn3__qwHE5F6NfEJq8uNiRcq7CSWw"
 
     const response = await fetch('http://localhost:3000/agents/clients/activar-bot', {
@@ -120,6 +129,9 @@ export const chatService = {
   },
 
   async getClientHistory(clientId: string) {
+    if (isServer) return []
+
+
     const token = "eyJhbGciOiJFUzI1NiIsImtpZCI6IjA5NGZhNTA2LTYzNGYtNDc5OS1hOGFjLThkNzJkZmU1NTcxZSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2ppcWFsY21neWhsZHJhemFjZ2d6LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI2MDQ3ZmI3MS0zNTVlLTRiZGEtYmI0MC1mZDI3MDZjZDRkNzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzczMDA2OTAyLCJpYXQiOjE3NzMwMDMzMDIsImVtYWlsIjoiYWxlam9iYXNpbGUwM0BnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3MzAwMzMwMn1dLCJzZXNzaW9uX2lkIjoiZWJhYzM4NWYtYjZjMS00N2ZmLTgyNmItZWMyM2NiZWE1MjQxIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.PCVPlycH-kZnaE2ZKIFQx7SCv6nL6o7S-1w_TaLAWI49yIrytvM16Fx8Awn3__qwHE5F6NfEJq8uNiRcq7CSWw"
 
     const response = await fetch(`http://localhost:3000/agents/perfil/clientes/${clientId}/historial`, {
