@@ -9,7 +9,6 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: 'InmoChat CRM - Mensajería Inmobiliaria',
   description: 'CRM inmobiliario con mensajería WhatsApp integrada para gestión de leads y propiedades',
-  generator: 'v0.app',
   icons: {
     icon: [
       {

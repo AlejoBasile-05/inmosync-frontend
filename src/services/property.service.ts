@@ -17,7 +17,7 @@ export const propertyService = {
   getAvailableProperties: async (): Promise<FrontendProperty[]> => {
     const token = 'eyJhbGciOiJFUzI1NiIsImtpZCI6IjA5NGZhNTA2LTYzNGYtNDc5OS1hOGFjLThkNzJkZmU1NTcxZSIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2ppcWFsY21neWhsZHJhemFjZ2d6LnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI2MDQ3ZmI3MS0zNTVlLTRiZGEtYmI0MC1mZDI3MDZjZDRkNzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzczMDE0NDcyLCJpYXQiOjE3NzMwMTA4NzIsImVtYWlsIjoiYWxlam9iYXNpbGUwM0BnbWFpbC5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc3MzAxMDg3Mn1dLCJzZXNzaW9uX2lkIjoiNDMyY2Y0NzYtMmI1Ni00YjY2LTg4NjctZTk0ZDA4ZWRlM2U5IiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.6ty7_C2euhyTuRu0OF2MgJREDVNRFsmtOBsQ55NkGXtdIs9kBIhFr7U2PWaxhyVwWfqEfdNkPuuJ0w8xwIEkdA';
 
-    const response = await fetch('http://localhost:3000/properties/allProperties?status=FREE', {
+    const response = await fetch('http://localhost:3000/properties/allProperties', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
