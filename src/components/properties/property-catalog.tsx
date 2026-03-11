@@ -29,7 +29,7 @@ interface Property {
   baths: number
   sqft: number
   characteristics: string[]
-  status: "Available" | "Reserved"
+  status: "FREE" | "BUSY"
 }
 
 interface PropertyCatalogProps {
@@ -49,7 +49,7 @@ const MOCK_PROPERTIES: Property[] = [
     baths: 2,
     sqft: 1_250,
     characteristics: ["Modern", "Luxury"],
-    status: "Available",
+    status: "FREE",
   },
   {
     id: "prop-2",
@@ -63,7 +63,7 @@ const MOCK_PROPERTIES: Property[] = [
     baths: 3,
     sqft: 2_800,
     characteristics: ["Charming", "Suburban"],
-    status: "Available",
+    status: "FREE",
   },
   {
     id: "prop-3",
@@ -77,7 +77,7 @@ const MOCK_PROPERTIES: Property[] = [
     baths: 2,
     sqft: 1_900,
     characteristics: ["Modern", "Beachfront"],
-    status: "Reserved",
+    status: "BUSY",
   },
   {
     id: "prop-4",
@@ -91,7 +91,7 @@ const MOCK_PROPERTIES: Property[] = [
     baths: 3,
     sqft: 3_100,
     characteristics: ["Elegant", "City"],
-    status: "Available",
+    status: "FREE",
   },
   {
     id: "prop-5",
@@ -105,7 +105,7 @@ const MOCK_PROPERTIES: Property[] = [
     baths: 1,
     sqft: 850,
     characteristics: ["Cozy", "Industrial"],
-    status: "Available",
+    status: "FREE",
   },
   {
     id: "prop-6",
@@ -119,7 +119,7 @@ const MOCK_PROPERTIES: Property[] = [
     baths: 2,
     sqft: 2_100,
     characteristics: ["Contemporary", "Townhouse"],
-    status: "Reserved",
+    status: "BUSY",
   },
 ]
 
@@ -200,7 +200,7 @@ function PropertyCard({
   property: Property
   onSend: (property: Property) => void
 }) {
-  const isAvailable = property.status === "Available"
+  const isAvailable = property.status === "FREE"
 
   return (
     <div
